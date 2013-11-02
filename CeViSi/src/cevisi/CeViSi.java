@@ -10,11 +10,12 @@ import datosPersona.Cliente;
 import datosPersona.Operador;
 import excepciones.DateAccessException;
 import gestionar.GestionAlquileres;
-import gestionar.GestionarPeliculas;
+import gestionar.GestorPeliculas;
 import java.util.Locale;
 import gestionar.GestorClientes;
 import gestionar.GestorOperadores;
-import interfacesGraficas.Inicio;
+import IG_Cliente.Inicio;
+import IG_Cliente.Principal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,11 +47,11 @@ public class CeViSi {
             
             
             Peliculas pelicula1 = new Peliculas("a001", "Acción", "Duro de Matar 5", "Blue Ray", "Cosito", 5);
-            GestionarPeliculas gpel1 = new GestionarPeliculas();
+            GestorPeliculas gpel1 = new GestorPeliculas();
             Peliculas pelicula2 = new Peliculas("a002", "Comedia", "Los Fornicas", "DVD", "xxxxx", 4);
-            GestionarPeliculas gpel2 = new GestionarPeliculas();
+            GestorPeliculas gpel2 = new GestorPeliculas();
             Peliculas pelicula3 = new Peliculas("a003", "Fantasía", "El Señor de los Anillos I", "DVD", "Guido Mortensen", 4);
-            GestionarPeliculas gpel3 = new GestionarPeliculas();
+            GestorPeliculas gpel3 = new GestorPeliculas();
             
             
             GestionAlquileres gal1 = new GestionAlquileres();
@@ -87,7 +88,7 @@ public class CeViSi {
         }*/
     //VentPrincipal cevisi = new VentPrincipal();
     //cevisi.setVisible(true);
-    Inicio in = new Inicio();
+    Principal in = new Principal();
     in.setVisible(true);
   }        
         
