@@ -134,11 +134,7 @@ public class Inicio extends javax.swing.JFrame {
         } catch (DateAccessException ex) {
             System.out.println(ex);
         }
-        
-        
-        
-        
-        
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

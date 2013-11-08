@@ -23,6 +23,12 @@ public class Cliente extends Persona {
     //constructores
     public Cliente(){
     }
+
+    public Cliente(String cuil) {
+        super(cuil);
+    }
+    
+    
     
     public Cliente(Integer id_cliente){
         this.id_cliente = id_cliente;

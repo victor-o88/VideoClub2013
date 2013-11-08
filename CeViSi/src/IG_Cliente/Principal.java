@@ -4,6 +4,7 @@
  */
 package IG_Cliente;
 
+import IG_Alquiler.RealizarAlquiler;
 import IG_Pelicula.PeliculaMenu;
 
 /**
@@ -54,6 +55,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jToggleButton2.setText("ALQUILERES");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,6 +105,13 @@ public class Principal extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    
+    //Alquileres
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        RealizarAlquiler ra = new RealizarAlquiler();
+        ra.setVisible(true);
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
      * @param args the command line arguments

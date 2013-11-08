@@ -15,18 +15,18 @@ import persistencia.AlquileresDAO;
  *
  * @author Alejandrux
  */
-public class GestionAlquileres {
+public class GestorAlquileres {
     
     private ArrayList alquileres = new ArrayList();
     private AlquileresDAO alquileresDAO = new AlquileresDAO();
 
-    public GestionAlquileres() throws DateAccessException{
+    public GestorAlquileres() throws DateAccessException{
              //levanta todo y devuelve una collection, lo casteo y lo guardo en cuenta        
         alquileres = (ArrayList)alquileresDAO.findAll();
     }
     
-    public void agregarCuenta(Alquileres alquiler, Peliculas pelicula, Cliente cliente) throws DateAccessException{
-        alquileresDAO.insert(alquiler, pelicula, cliente);
+    public void agregarAlquiler(Alquileres alquiler, Peliculas pel1, Peliculas pel2, Peliculas pel3, Cliente cliente) throws DateAccessException{
+        alquileresDAO.insert(alquiler, pel1, pel2, pel3, cliente);
         alquileres.add(alquiler);
     }
     

@@ -44,12 +44,12 @@ public class AlquileresDAO {
             Statement smt = con.createStatement();
             
             ResultSet result = smt.executeQuery("Select alquileres.id_alquiler as Id_Alquiler, "
-                    + "alquiler_pelicula.cod_pelicula as Código_Película, "
-                    + "pelicula.titulo as Título, persona.cuil as CUIL, "
+                    + "alquiler_pelicula.cod_pelicula as Codigo_Pelicula, "
+                    + "pelicula.titulo as Titulo, persona.cuil as CUIL, "
                     + "persona.nombre as Nombre, persona.apellido as Apellido, "
                     + "alquileres.fecha_alquiler as Fecha_Alquiler, "
                     + "alquileres.monto_alquiler as Monto_Alquiler, "
-                    + "alquileres.fecha_entrega de Fecha_Entrega "
+                    + "alquileres.fecha_entrega as Fecha_Entrega "
                     + "from persona, alquileres, alquiler_pelicula, pelicula "
                     + "where persona.cuil=alquiler_pelicula.cuil and "
                     + "alquileres.id_alquiler = alquiler_pelicula.id_alquiler and "
@@ -66,8 +66,8 @@ public class AlquileresDAO {
                 cliente = new Cliente();
                 
                 alquiler.setId_alquiler(result.getInt("Id_Alquiler"));
-                pelicula.setCod_pelicula(result.getString("Código_Película"));
-                pelicula.setTitulo(result.getString("Título"));
+                pelicula.setCod_pelicula(result.getString("Codigo_Pelicula"));
+                pelicula.setTitulo(result.getString("Titulo"));
                 cliente.setCuil(result.getString("CUIL"));
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));
@@ -93,8 +93,8 @@ public class AlquileresDAO {
             Statement smt = con.createStatement();
             
             ResultSet result = smt.executeQuery("Select alquiler_pelicula.id_alquiler as Id_Alquiler, "
-                    + "alquiler_pelicula.cod_pelicula as Código_Película, "
-                    + "pelicula.titulo as Título, persona.cuil as CUIL, "
+                    + "alquiler_pelicula.cod_pelicula as Codigo_Pelicula, "
+                    + "pelicula.titulo as Titulo, persona.cuil as CUIL, "
                     + "persona.nombre as Nombre, persona.apellido as Apellido, "
                     + "alquileres.fecha_alquiler as Fecha_Alquiler, "
                     + "alquileres.monto_alquiler as Monto_Alquiler, "
@@ -117,8 +117,8 @@ public class AlquileresDAO {
                 cliente = new Cliente();
                 
                 alquiler.setId_alquiler(result.getInt("Id_Alquiler"));
-                pelicula.setCod_pelicula(result.getString("Código_Película"));
-                pelicula.setTitulo(result.getString("Título"));
+                pelicula.setCod_pelicula(result.getString("Codigo_Pelicula"));
+                pelicula.setTitulo(result.getString("Titulo"));
                 cliente.setCuil(result.getString("CUIL"));
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));
@@ -139,7 +139,7 @@ public class AlquileresDAO {
     }
     
         //insertar registro
-    public void insert (Alquileres insertRecord, Peliculas insertRecord2, Cliente insertRecord3) throws DateAccessException{
+    public void insert (Alquileres insertRecord, Peliculas insertRecordPel1, Peliculas insertRecordPel2, Peliculas insertRecordPel3, Cliente insertRecord3) throws DateAccessException{
         try {
             Alquileres existe = findByPK(insertRecord.getId_alquiler());
                         
@@ -156,18 +156,37 @@ public class AlquileresDAO {
             smt.setDate(2, insertRecord.getFecha_alquiler());
             smt.setFloat(3, insertRecord.getMonto_alquiler());
             smt.setDate(4, insertRecord.getFecha_entrega());
-                        
+
+            
             PreparedStatement smt2 = con.prepareStatement("Insert into alquiler_pelicula "
                     + "(cod_pelicula, cuil, id_alquiler) "
                     + "values (?,?,?)");
-            
-            smt2.setString(1, insertRecord2.getCod_pelicula());
+
+            smt2.setString(1, insertRecordPel1.getCod_pelicula());
             smt2.setString(2, insertRecord3.getCuil());
             smt2.setInt(3, insertRecord.getId_alquiler());
+
+            PreparedStatement smt3 = con.prepareStatement("Insert into alquiler_pelicula "
+                    + "(cod_pelicula, cuil, id_alquiler) "
+                    + "values (?,?,?)");
+
+            smt3.setString(1, insertRecordPel2.getCod_pelicula());
+            smt3.setString(2, insertRecord3.getCuil());
+            smt3.setInt(3, insertRecord.getId_alquiler());
+
+            PreparedStatement smt4 = con.prepareStatement("Insert into alquiler_pelicula "
+                    + "(cod_pelicula, cuil, id_alquiler) "
+                    + "values (?,?,?)");
+
+            smt4.setString(1, insertRecordPel3.getCod_pelicula());
+            smt4.setString(2, insertRecord3.getCuil());
+            smt4.setInt(3, insertRecord.getId_alquiler());
+            
             
             smt.execute();
             smt2.execute();
-            
+            smt3.execute();
+            smt4.execute();
         } catch (Exception e) {
             throw new DateAccessException("Error en AlquileresDAO.insert() "+e);
         } 
