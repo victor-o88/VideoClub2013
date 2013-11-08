@@ -32,6 +32,7 @@ public class RealizarAlquiler extends javax.swing.JFrame {
         
         if(ex_pel1!= null){
             jTextField6.setText(ex_pel1.getMonto().toString());
+            
         }
         //
         Peliculas ex_pel2 = gp.buscarPelicula(idpel2);

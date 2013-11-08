@@ -44,12 +44,12 @@ public class AlquileresDAO {
             Statement smt = con.createStatement();
             
             ResultSet result = smt.executeQuery("Select alquileres.id_alquiler as Id_Alquiler, "
-                    + "alquiler_pelicula.cod_pelicula as Código_Película, "
-                    + "pelicula.titulo as Título, persona.cuil as CUIL, "
+                    + "alquiler_pelicula.cod_pelicula as Codigo_Pelicula, "
+                    + "pelicula.titulo as Titulo, persona.cuil as CUIL, "
                     + "persona.nombre as Nombre, persona.apellido as Apellido, "
                     + "alquileres.fecha_alquiler as Fecha_Alquiler, "
                     + "alquileres.monto_alquiler as Monto_Alquiler, "
-                    + "alquileres.fecha_entrega de Fecha_Entrega "
+                    + "alquileres.fecha_entrega as Fecha_Entrega "
                     + "from persona, alquileres, alquiler_pelicula, pelicula "
                     + "where persona.cuil=alquiler_pelicula.cuil and "
                     + "alquileres.id_alquiler = alquiler_pelicula.id_alquiler and "
@@ -66,8 +66,8 @@ public class AlquileresDAO {
                 cliente = new Cliente();
                 
                 alquiler.setId_alquiler(result.getInt("Id_Alquiler"));
-                pelicula.setCod_pelicula(result.getString("Código_Película"));
-                pelicula.setTitulo(result.getString("Título"));
+                pelicula.setCod_pelicula(result.getString("Codigo_Pelicula"));
+                pelicula.setTitulo(result.getString("Titulo"));
                 cliente.setCuil(result.getString("CUIL"));
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));
@@ -93,8 +93,8 @@ public class AlquileresDAO {
             Statement smt = con.createStatement();
             
             ResultSet result = smt.executeQuery("Select alquiler_pelicula.id_alquiler as Id_Alquiler, "
-                    + "alquiler_pelicula.cod_pelicula as Código_Película, "
-                    + "pelicula.titulo as Título, persona.cuil as CUIL, "
+                    + "alquiler_pelicula.cod_pelicula as Codigo_Pelicula, "
+                    + "pelicula.titulo as Titulo, persona.cuil as CUIL, "
                     + "persona.nombre as Nombre, persona.apellido as Apellido, "
                     + "alquileres.fecha_alquiler as Fecha_Alquiler, "
                     + "alquileres.monto_alquiler as Monto_Alquiler, "
@@ -117,8 +117,8 @@ public class AlquileresDAO {
                 cliente = new Cliente();
                 
                 alquiler.setId_alquiler(result.getInt("Id_Alquiler"));
-                pelicula.setCod_pelicula(result.getString("Código_Película"));
-                pelicula.setTitulo(result.getString("Título"));
+                pelicula.setCod_pelicula(result.getString("Codigo_Pelicula"));
+                pelicula.setTitulo(result.getString("Titulo"));
                 cliente.setCuil(result.getString("CUIL"));
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));

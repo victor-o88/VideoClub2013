@@ -97,7 +97,7 @@ public class Peliculas {
     
     //monto
     public Integer getMonto() {
-        return monto;
+        return monto=9;
     }
 
     public void setMonto(Integer monto) {
