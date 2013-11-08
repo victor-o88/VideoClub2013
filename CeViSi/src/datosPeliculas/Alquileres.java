@@ -30,6 +30,12 @@ public class Alquileres {
         return id_alquiler;
     }
 
+    public Alquileres(Integer id_alquiler) {
+        this.id_alquiler = id_alquiler;
+    }
+
+    
+    
     public void setId_alquiler(Integer id_alquiler) {
         this.id_alquiler = id_alquiler;
     }

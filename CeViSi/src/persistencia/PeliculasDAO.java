@@ -123,14 +123,15 @@ public class PeliculasDAO {
             Connection con = BaseDeDatos.getInstance();
             
             PreparedStatement smt = con.prepareStatement("Insert into pelicula "
-                    + "(cod_pelicula, genero, titulo, formato, director, stock) "
-                    + "values (?,?,?,?,?,?)");
+                    + "(cod_pelicula, genero, titulo, formato, director, stock, monto) "
+                    + "values (?,?,?,?,?,?,?)");
             smt.setString(1, insertRecord.getCod_pelicula());
             smt.setString(2, insertRecord.getGenero());
             smt.setString(3, insertRecord.getTitulo());
             smt.setString(4, insertRecord.getFormato());
             smt.setString(5, insertRecord.getDirector());
             smt.setInt(6, insertRecord.getStock());
+            smt.setInt(7, insertRecord.getMonto());
             
             
             smt.execute();

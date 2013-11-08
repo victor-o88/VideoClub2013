@@ -18,7 +18,7 @@ public class BaseDeDatos {
             String url = "jdbc:postgresql://127.0.0.1:5432/cevisi";
             String driver = "org.postgresql.Driver";
             String user = "postgres";
-            String pass = "victor-88";
+            String pass = "1234567";
             Class.forName(driver);
             instance = DriverManager.getConnection(url, user, pass);
         }

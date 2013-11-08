@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,7 +10,7 @@ import datosPeliculas.Peliculas;
 import datosPersona.Cliente;
 import datosPersona.Operador;
 import excepciones.DateAccessException;
-import gestionar.GestionAlquileres;
+import gestionar.GestorAlquileres;
 import gestionar.GestorPeliculas;
 import java.util.Locale;
 import gestionar.GestorClientes;
@@ -54,9 +55,9 @@ public class CeViSi {
             GestorPeliculas gpel3 = new GestorPeliculas();
             
             
-            GestionAlquileres gal1 = new GestionAlquileres();
-            GestionAlquileres gal2 = new GestionAlquileres();
-            GestionAlquileres gal3 = new GestionAlquileres();
+            GestorAlquileres gal1 = new GestorAlquileres();
+            GestorAlquileres gal2 = new GestorAlquileres();
+            GestorAlquileres gal3 = new GestorAlquileres();
             
             
             //clientes
@@ -86,10 +87,11 @@ public class CeViSi {
         finally{
             System.out.println("Otras Operaciones");
         }*/
-    //VentPrincipal cevisi = new VentPrincipal();
-    //cevisi.setVisible(true);
-    Principal in = new Principal();
-    in.setVisible(true);
+    Inicio cevisi = new Inicio();
+    cevisi.setVisible(true);
+    //Principal in = new Principal();
+    //in.setVisible(true);
+        
   }        
         
     

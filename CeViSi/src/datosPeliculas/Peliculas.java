@@ -16,19 +16,26 @@ public class Peliculas {
     private String formato;
     private String director;
     private Integer stock;
+    private Integer monto;
     
     //constructores
     public Peliculas(){
         
     }
 
-    public Peliculas(String cod_pelicula, String genero, String titulo, String formato, String director, Integer stock) {
+    public Peliculas(String cod_pelicula) {
+        this.cod_pelicula = cod_pelicula;
+    }
+
+    
+    public Peliculas(String cod_pelicula, String genero, String titulo, String formato, String director, Integer stock, Integer monto) {
         this.cod_pelicula = cod_pelicula;
         this.genero = genero;
         this.titulo = titulo;
         this.formato = formato;
         this.director = director;
         this.stock = stock;
+        this.monto = monto;
     }
     
     //
@@ -87,5 +94,15 @@ public class Peliculas {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+    
+    //monto
+    public Integer getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }
+    
     
 }
