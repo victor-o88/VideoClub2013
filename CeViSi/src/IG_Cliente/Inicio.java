@@ -123,7 +123,7 @@ public class Inicio extends javax.swing.JFrame {
             Integer id = Integer.parseInt(usuario);
             String contr = jTextField2.getText();
             
-            Collection existe = go.validarUsuario(id, contr);
+            Operador existe = go.validarUsuario(id,contr);
             
             if(existe != null){
                 Principal prin = new Principal();

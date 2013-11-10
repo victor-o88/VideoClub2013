@@ -30,5 +30,10 @@ public class GestorAlquileres {
         alquileres.add(alquiler);
     }
     
+    public Alquileres buscaralquiler(Integer id_alq) throws DateAccessException{
+        Alquileres encontrado = alquileresDAO.findByPK(id_alq);
+        return encontrado;   
+    }
+    
     
 }

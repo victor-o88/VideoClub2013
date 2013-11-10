@@ -114,13 +114,6 @@ public class PeliculaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public String buscar(){
-        String cod_pelicula = jTextField1.getText();
-        return cod_pelicula;
-    }
-    
-    
     //agregar pelicula
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
@@ -134,11 +127,12 @@ public class PeliculaMenu extends javax.swing.JFrame {
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
         try {
             // TODO add your handling code here:
+            String cod = jTextField1.getText();
             GestorPeliculas gp = new GestorPeliculas();
-            Peliculas existe = gp.buscarPelicula(buscarpel());
+            Peliculas existe = gp.buscarPelicula(cod);
             
             if(existe!=null){
-                BuscarPelicula bp = new BuscarPelicula(buscarpel());
+                BuscarPelicula bp = new BuscarPelicula(cod);
 
                 bp.setVisible(true);
             }

@@ -99,7 +99,7 @@ public class OperadorDAO {
 //                    operador.setCuil(result.getString("CUIL"));
 //                    operador.setIdOperador(result.getInt("Id_Operador"));
 //                    operador.setContraseña(result.getString("Contraseña"));
-////                    operador.setConf_contraseña(result.getString("operador.conf_contraseña"));
+//                    operador.setConf_contraseña(result.getString("operador.conf_contraseña"));
 //
 //                    array.add(operador);
 //            }
@@ -173,7 +173,7 @@ public class OperadorDAO {
 
     
     //validar usuarioConttrseña
-        public Collection usuarioContr(Integer id_operador, String contrasena) throws DateAccessException{
+        public Operador usuarioContr(Integer id_operador, String contrasena) throws DateAccessException{
         try {
             Connection con = BaseDeDatos.getInstance();
             Statement smt = con.createStatement();
@@ -184,19 +184,19 @@ public class OperadorDAO {
                     + "contrasena='"+contrasena+"';");
             
             Operador operador = null;
-            ArrayList ar = new ArrayList();
+            //ArrayList ar = new ArrayList();
             
-            while(result.next()){
+            if(result.next()){
                 operador = new Operador();
                 
                 operador.setIdOperador(result.getInt("id_operador"));
                 operador.setContraseña(result.getString("contrasena"));
-                ar.add(operador);
+                //ar.add(operador);
             }
             
             result.close();
             smt.close();
-            return ar;
+            return operador;
             
         } catch (Exception e) {
             throw new DateAccessException("Error en OperadorDAO.usuarioContr "+e);

@@ -151,15 +151,14 @@ public class ModificarPel extends javax.swing.JFrame {
                 String hay = jTextField1.getText();
                 Integer stock = Integer.parseInt(hay);
                 
-                String codi = pel.getCod_pelicula();
+                //String codi = pel.getCod_pelicula();
                 String tit = pel.getTitulo();
                 String gen = pel.getGenero();
                 String dir = pel.getDirector();
                 String form = pel.getFormato();
                 Integer monto = pel.getMonto();
-                
-                
-                Peliculas pelicula = new Peliculas(codi, gen, tit,form, dir, stock, monto);
+                       
+                Peliculas pelicula = new Peliculas(cod,gen,tit,form,dir,stock,monto);
                 gp.modificarPelicula(pelicula);
             
         }catch(DateAccessException ex){

@@ -72,7 +72,7 @@ public class AlquileresDAO {
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));
                 alquiler.setFecha_alquiler(result.getDate("Fecha_Alquiler"));
-                alquiler.setMonto_alquiler(result.getFloat("Monto_Alquiler"));
+                alquiler.setMonto_alquiler(result.getInt("Monto_Alquiler"));
                 alquiler.setFecha_entrega(result.getDate("Fecha_Entrega"));
             }
             
@@ -123,7 +123,7 @@ public class AlquileresDAO {
                 cliente.setNombre(result.getString("Nombre"));
                 cliente.setApellido(result.getString("Apellido"));
                 alquiler.setFecha_alquiler(result.getDate("Fecha_Alquiler"));
-                alquiler.setMonto_alquiler(result.getFloat("Monto_Alquiler"));
+                alquiler.setMonto_alquiler(result.getInt("Monto_Alquiler"));
                 alquiler.setFecha_entrega(result.getDate("Fecha_Entrega"));
 
                 array.add(alquiler);
@@ -154,7 +154,7 @@ public class AlquileresDAO {
                     + "values (?,?,?,?)");
             smt.setInt(1, insertRecord.getId_alquiler());
             smt.setDate(2, insertRecord.getFecha_alquiler());
-            smt.setFloat(3, insertRecord.getMonto_alquiler());
+            smt.setInt(3, insertRecord.getMonto_alquiler());
             smt.setDate(4, insertRecord.getFecha_entrega());
 
             

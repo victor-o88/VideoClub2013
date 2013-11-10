@@ -19,8 +19,8 @@ public class Alquileres {
     private GestorClientes cliente;
     private Date fecha_alquiler;
     private Date fecha_entrega;
-    private float monto_alquiler;
-    private ArrayList<Peliculas> peliculas = new ArrayList();
+    private Integer monto_alquiler;
+    //private ArrayList<Peliculas> peliculas = new ArrayList();
 
     
     
@@ -50,13 +50,13 @@ public class Alquileres {
     }
 
     //peliculas
-    public ArrayList getPelicula() {
+    /*public ArrayList getPelicula() {
         return peliculas;
     }
 
     public void setPelicula(ArrayList peliculas) {
         this.peliculas = peliculas;
-    }
+    }**/
 
     //fecha_alquiler
     public Date getFecha_alquiler() {
@@ -77,11 +77,11 @@ public class Alquileres {
     }
 
     //monto
-    public float getMonto_alquiler() {
+    public Integer getMonto_alquiler() {
         return monto_alquiler;
     }
 
-    public void setMonto_alquiler(float monto_alquiler) {
+    public void setMonto_alquiler(Integer monto_alquiler) {
         this.monto_alquiler = monto_alquiler;
     }
     
@@ -89,11 +89,12 @@ public class Alquileres {
     public Alquileres() {
     }
 
-    public Alquileres(Integer id_alquiler, GestorClientes cliente, Date fecha_alquiler, float monto_alquiler) {
+    public Alquileres(Integer id_alquiler, GestorClientes cliente, Date fecha_alquiler, Integer monto_alquiler, Date fecha_entrega) {
         this.id_alquiler = id_alquiler;
         this.cliente = cliente;
         this.fecha_alquiler = fecha_alquiler;
         this.monto_alquiler = monto_alquiler;
+        this.fecha_entrega = fecha_entrega;
     }
 
     public void limitarAlquiler(ArrayList pel){

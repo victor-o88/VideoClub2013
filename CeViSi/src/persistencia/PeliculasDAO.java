@@ -44,7 +44,7 @@ public class PeliculasDAO {
             
             //no se que pasa che, fijate si lo podes resolver
             ResultSet result = smt.executeQuery("Select cod_pelicula, "
-                    + "genero, titulo, formato, director, stock "
+                    + "genero, titulo, formato, director, stock, monto "
                     + "from pelicula "
                     + "where cod_pelicula='"+cod_pelicula+"'");
             
@@ -59,6 +59,8 @@ public class PeliculasDAO {
                 peliculas.setFormato(result.getString("formato"));
                 peliculas.setDirector(result.getString("director"));
                 peliculas.setStock(result.getInt("stock"));
+                peliculas.setMonto(result.getInt("monto"));
+                
             }
             
             result.close();
@@ -81,7 +83,7 @@ public class PeliculasDAO {
             ResultSet result = smt.executeQuery("Select cod_pelicula as Codigo_Pelicula, "
                     + "genero as Genero, titulo as Titulo, "
                     + "formato as Formato, "
-                    + "director as Director, stock as Stock  "
+                    + "director as Director, stock as Stock, monto as Monto "
                     + "from pelicula "
                     + "order by cod_pelicula");
             
@@ -97,6 +99,7 @@ public class PeliculasDAO {
                 peliculas.setFormato(result.getString("Formato"));
                 peliculas.setDirector(result.getString("Director"));
                 peliculas.setStock(result.getInt("Stock"));
+                peliculas.setMonto(result.getInt("Monto"));
 
                 array.add(peliculas);
             }
@@ -132,8 +135,7 @@ public class PeliculasDAO {
             smt.setString(5, insertRecord.getDirector());
             smt.setInt(6, insertRecord.getStock());
             smt.setInt(7, insertRecord.getMonto());
-            
-            
+
             smt.execute();
 
             
@@ -148,15 +150,16 @@ public class PeliculasDAO {
         try {
             Connection con = BaseDeDatos.getInstance();
             PreparedStatement smt = con.prepareStatement("Update pelicula "
-                    + "set formato=?, stock=?, genero=?, titulo=?, director=? "
+                    + "set formato=?, stock=?, genero=?, titulo=?, director=?, monto=? "
                     + "where cod_pelicula=?");
             
-            smt.setString(1, updateRecord.getCod_pelicula());
-            smt.setString(2, updateRecord.getGenero());
-            smt.setString(3, updateRecord.getTitulo());
-            smt.setString(4, updateRecord.getFormato());
+            smt.setString(1, updateRecord.getFormato());
+            smt.setInt(2, updateRecord.getStock());
+            smt.setString(3, updateRecord.getGenero());
+            smt.setString(4, updateRecord.getTitulo());
             smt.setString(5, updateRecord.getDirector());
-            smt.setInt(6, updateRecord.getStock());
+            smt.setInt(6, updateRecord.getMonto());
+            smt.setString(7, updateRecord.getCod_pelicula());
             
             smt.execute();
             

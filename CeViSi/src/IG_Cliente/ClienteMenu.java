@@ -19,10 +19,8 @@ public class ClienteMenu extends javax.swing.JFrame {
      */
     public ClienteMenu() {
         initComponents();
-        //setSize(500,400);
         setLocationRelativeTo(null);
         setResizable(false);
-        //setDefaultCloseOperation(1);
         setTitle("Cliente");
     }
 

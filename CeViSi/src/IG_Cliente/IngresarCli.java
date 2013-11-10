@@ -8,6 +8,7 @@ import cevisi.CeViSi;
 import datosPersona.Cliente;
 import excepciones.DateAccessException;
 import gestionar.GestorClientes;
+import java.util.Random;
 
 /**
  *
@@ -28,6 +29,24 @@ public class IngresarCli extends javax.swing.JFrame {
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         String fec = sdf.format(date);
         jTextField1.setText(fec);
+        
+        try{
+        int i;
+        do{
+        Random rn = new Random();
+        Integer id = rn.nextInt(9000)+1000;
+        GestorClientes gc = new GestorClientes();
+        Cliente nuevo = gc.buscarCliente(id);
+
+        if(nuevo!=null){
+            i=1;
+        }jTextField9.setText(id.toString());
+            i=0;
+        }while(i!=0);
+        
+        }catch(DateAccessException e){
+            System.out.println(e);
+        }
     }
 
     /**

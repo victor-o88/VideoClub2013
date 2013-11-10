@@ -145,11 +145,11 @@ public class ClienteDAO {
             smt.setInt(5, insertRecord.getTelefono());
             
             PreparedStatement smt2 = con.prepareStatement("Insert into cliente "
-                    + "(id_cliente, fecha_inscripcion, cuil) "
+                    + "(cuil, id_cliente, fecha_inscripcion) "
                     + "values (?,?,?)");
-            smt2.setInt(1, insertRecord.getIdCliente());
-            smt2.setDate(2, insertRecord.getFechaInscripcion());
-            smt2.setString(3, insertRecord.getCuil());
+            smt2.setString(1, insertRecord.getCuil());
+            smt2.setInt(2, insertRecord.getIdCliente());
+            smt2.setDate(3, insertRecord.getFechaInscripcion());
             
             smt.execute();
             smt2.execute();
