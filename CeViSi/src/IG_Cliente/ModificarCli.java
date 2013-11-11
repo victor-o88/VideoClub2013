@@ -148,13 +148,9 @@ public class ModificarCli extends javax.swing.JFrame {
         Integer tel = Integer.parseInt(aux);
         
         String nom = cli.getNombre();
-            System.out.println(nom);
         String ape = cli.getApellido();
-            System.out.println(ape);
         String cuil = cli.getCuil();
-            System.out.println(cuil);
         Date fec = cli.getFechaInscripcion();
-            System.out.println(fec);
 
         Cliente cliente = new Cliente(ido2,fec,cuil,nom,ape,dom,tel);
         gc.modificarCliente(cliente);

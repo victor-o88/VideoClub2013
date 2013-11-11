@@ -31,7 +31,7 @@ public class ListaPeliculas extends javax.swing.JFrame {
             setLocationRelativeTo(null);
             setResizable(false);
             setDefaultCloseOperation(1);
-            String [] columnas = {"Cod_Pelicula", "Titulo", "Genero", "Formato", "Director", "Stock"};
+            String [] columnas = {"Cod_Pelicula", "Titulo", "Genero", "Formato", "Director", "Stock", "Monto"};
             modelo.setColumnIdentifiers(columnas);
             
             GestorPeliculas gp = new GestorPeliculas();
@@ -51,8 +51,9 @@ public class ListaPeliculas extends javax.swing.JFrame {
                 String formato = pel.getFormato();
                 String director = pel.getDirector();
                 Integer stock = pel.getStock();
+                Integer mnt = pel.getMonto();
                 
-                Object [] fila = {cod_pelicula, titulo, genero, formato, director, stock};
+                Object [] fila = {cod_pelicula, titulo, genero, formato, director, stock, mnt};
                 modelo.addRow(fila);
             }
             this.jTable1.setModel(modelo);

@@ -32,9 +32,9 @@ public class GestorOperadores {
         operadores.add(operador);//loa agrego a la BD
     }
     
-    public Collection validarUsuario(Integer id_cliente, String contr) throws DateAccessException{
+    public Operador validarUsuario(Integer id_cliente, String contr) throws DateAccessException{
         
-        Collection encontrado = operadorDAO.usuarioContr(id_cliente, contr);
+        Operador encontrado = operadorDAO.usuarioContr(id_cliente, contr);
         return encontrado;
     }
 }

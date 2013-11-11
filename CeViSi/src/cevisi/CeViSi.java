@@ -97,9 +97,7 @@ public class CeViSi {
     
          public Date calcfecha(){
             java.util.Date d = new java.util.Date();
-            
             java.sql.Date f;
-            
             f = new java.sql.Date(d.getTime());
             return f;
         }

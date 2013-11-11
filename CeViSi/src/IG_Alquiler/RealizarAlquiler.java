@@ -4,11 +4,16 @@
  */
 package IG_Alquiler;
 
+import cevisi.CeViSi;
 import datosPeliculas.Alquileres;
 import datosPeliculas.Peliculas;
 import datosPersona.Cliente;
+import excepciones.DateAccessException;
 import gestionar.GestorAlquileres;
+import gestionar.GestorClientes;
 import gestionar.GestorPeliculas;
+import java.util.*;
+import javax.swing.table.*;
 
 /**
  *
@@ -19,40 +24,62 @@ public class RealizarAlquiler extends javax.swing.JFrame {
     /**
      * Creates new form RealizarAlquiler
      */
+    DefaultTableModel modelo = new DefaultTableModel();
     public RealizarAlquiler() {
-      try{  
+        try{
         initComponents();
-        String idpel1 = jTextField2.getText();
-        String idpel2 = jTextField3.getText();
-        String idpel3 = jTextField4.getText();
         
-        GestorPeliculas gp = new GestorPeliculas();
-        //
-        Peliculas ex_pel1 = gp.buscarPelicula(idpel1);
+        //Id Alquiler
+        int i;
+        do{
+        Random rn = new Random();
+        Integer id = rn.nextInt(9000)+1000;
+        GestorAlquileres ga = new GestorAlquileres();
+        Alquileres nuevo = ga.buscaralquiler(id);
+
+        if(nuevo!=null){
+            i=1;
+        }jTextField1.setText(id.toString());
+            i=0;
+        }while(i!=0);
         
-        if(ex_pel1!= null){
-            jTextField6.setText(ex_pel1.getMonto().toString());
+        //Fecha de Alquiler y Devolucion
+        CeViSi f = new CeViSi();
+        jTextField4.setText(f.calcfecha().toString());
+        jTextField11.setText(devolucion().toString());
+        
+        //Lista de peliculas
+        String [] columnas = {"Cod_Pelicula", "Titulo", "Genero", "Formato", "Director", "Stock", "Monto"};
+            modelo.setColumnIdentifiers(columnas);
             
-        }
-        //
-        Peliculas ex_pel2 = gp.buscarPelicula(idpel2);
-        
-        if(ex_pel2!= null){
-            jTextField7.setText(ex_pel2.getMonto().toString());
-        }
-        //
-        Peliculas ex_pel3 = gp.buscarPelicula(idpel3);
-        
-        if(ex_pel3!= null){
-            jTextField8.setText(ex_pel3.getMonto().toString());
-        }
-        
-        
-        
-      }catch(Exception ex){
-          System.out.println(ex);
-      }
-        
+            GestorPeliculas gp = new GestorPeliculas();
+            Collection listado = gp.listarPeliculas();
+            
+            ArrayList peliculas = (ArrayList)listado;
+            
+            Iterator<Peliculas> it = peliculas.iterator();
+            
+            while(it.hasNext()){
+                
+                Peliculas pel = it.next();
+                
+                String cod_pelicula = pel.getCod_pelicula();
+                String titulo = pel.getTitulo();
+                String genero = pel.getGenero();
+                String formato = pel.getFormato();
+                String director = pel.getDirector();
+                Integer stock = pel.getStock();
+                Integer mnt = pel.getMonto();
+                
+                Object [] fila = {cod_pelicula, titulo, genero, formato, director, stock, mnt};
+                modelo.addRow(fila);
+            }
+            this.jTable1.setModel(modelo);
+            this.jScrollPane1.setRowHeader(null);
+            
+            }catch(DateAccessException e){
+            System.out.println(e);
+                }   
     }
 
     /**
@@ -65,44 +92,36 @@ public class RealizarAlquiler extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jToggleButton3 = new javax.swing.JToggleButton();
+        jTextField10 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField11 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("CUIL");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Id Pelicula 1");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,12 +155,6 @@ public class RealizarAlquiler extends javax.swing.JFrame {
 
         jLabel6.setText("Id Alquiler");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Id pelicula 2");
 
         jLabel4.setText("Id Pelicula 3");
@@ -155,26 +168,35 @@ public class RealizarAlquiler extends javax.swing.JFrame {
             }
         });
 
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
+            }
+        });
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
+
+        jLabel8.setText("Fecha Alquiler");
+
+        jLabel9.setText("Fecha Devolucion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(jLabel5)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(144, 144, 144)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(37, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -182,31 +204,51 @@ public class RealizarAlquiler extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField4)))
-                            .addComponent(jToggleButton3, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2)
+                                    .addComponent(jTextField3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 39, Short.MAX_VALUE)
+                                .addComponent(jToggleButton3)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                            .addComponent(jTextField8)
+                            .addComponent(jTextField7)
+                            .addComponent(jLabel7)
                             .addComponent(jTextField6))
-                        .addGap(62, 62, 62)
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(52, 52, 52))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(204, 204, 204))
+                        .addGap(52, 52, 52))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(283, 283, 283)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,9 +258,9 @@ public class RealizarAlquiler extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,54 +271,57 @@ public class RealizarAlquiler extends javax.swing.JFrame {
                         .addComponent(jToggleButton2)
                         .addGap(64, 64, 64))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton3))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jToggleButton3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)))
+                        .addContainerGap(19, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    
     //aceptar
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         try{
-            String cuil = jTextField1.getText();
-   
-            String id_alq = jTextField5.getText();
-            
+            String ids = jTextField10.getText();
+            Integer id = Integer.parseInt(ids);
+            GestorClientes gc = new GestorClientes();
+            Cliente cliente = gc.buscarCliente(id);
+            String cuil = cliente.getCuil();
+            String id_alq = jTextField1.getText();
             
             Integer idalq = Integer.parseInt(id_alq);
-            String id_pel1 = jTextField2.getText();
-            String id_pel2 = jTextField3.getText();
-            String id_pel3 = jTextField4.getText();
+            String id_pel1 = jTextField5.getText();
+            String id_pel2 = jTextField2.getText();
+            String id_pel3 = jTextField3.getText();
             String mntoTot = jTextField9.getText();
 
             GestorAlquileres ga = new GestorAlquileres();
@@ -294,10 +339,6 @@ public class RealizarAlquiler extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     //cancelar
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
@@ -318,6 +359,91 @@ public class RealizarAlquiler extends javax.swing.JFrame {
         Integer resultado = mnt1 + mnt2 + mnt3;
         jTextField9.setText(resultado.toString());
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        // TODO add your handling code here:
+            try{
+            String idpel1 = jTextField5.getText();
+            GestorPeliculas gp = new GestorPeliculas();
+            Peliculas ex_pel1 = gp.buscarPelicula(idpel1);
+            String cant = ex_pel1.getStock().toString();
+            Integer stk = Integer.parseInt(cant);
+            
+            if(ex_pel1!=null && stk!=0){
+                }
+                jTextField6.setText(ex_pel1.getMonto().toString());
+                Integer nuevo = stk-1;
+                System.out.println(nuevo);
+                
+                String tit = ex_pel1.getTitulo();
+                String gen = ex_pel1.getGenero();
+                String dir = ex_pel1.getDirector();
+                String form = ex_pel1.getFormato();
+                Integer monto = ex_pel1.getMonto();
+                
+                Peliculas pelicula = new Peliculas(idpel1, gen, tit, form, dir, nuevo, monto);
+                gp.modificarPelicula(pelicula); 
+                 
+            }catch(DateAccessException e){
+                System.out.println(e);
+                }
+    }//GEN-LAST:event_jTextField5KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        // TODO add your handling code here:
+            try{
+            String idpel2 = jTextField2.getText();
+            GestorPeliculas gp = new GestorPeliculas();
+            Peliculas ex_pel2 = gp.buscarPelicula(idpel2);
+            String cant = ex_pel2.getStock().toString();
+            Integer stk = Integer.parseInt(cant);
+        
+            if(ex_pel2!=null && stk!=0){
+                 }
+                jTextField7.setText(ex_pel2.getMonto().toString());
+                Integer nuevo = stk-1;
+                
+                String tit = ex_pel2.getTitulo();
+                String gen = ex_pel2.getGenero();
+                String dir = ex_pel2.getDirector();
+                String form = ex_pel2.getFormato();
+                Integer monto = ex_pel2.getMonto();
+                
+                Peliculas pelicula = new Peliculas(idpel2,gen,tit,form,dir,nuevo,monto);
+                gp.modificarPelicula(pelicula);
+                
+            }catch(DateAccessException e){
+                System.out.println(e);
+                }
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        // TODO add your handling code here:
+            try{
+            String idpel3 = jTextField3.getText();
+            GestorPeliculas gp = new GestorPeliculas();
+            Peliculas ex_pel3 = gp.buscarPelicula(idpel3);
+            String cant = ex_pel3.getStock().toString();
+            Integer stk = Integer.parseInt(cant);
+        
+            if(ex_pel3!=null && stk!=0){
+                 }
+                jTextField8.setText(ex_pel3.getMonto().toString());
+                Integer nuevo = stk-1;
+                
+                String tit = ex_pel3.getTitulo();
+                String gen = ex_pel3.getGenero();
+                String dir = ex_pel3.getDirector();
+                String form = ex_pel3.getFormato();
+                Integer monto = ex_pel3.getMonto();
+                
+                Peliculas pelicula = new Peliculas(idpel3,gen,tit,form,dir,nuevo,monto);
+                gp.modificarPelicula(pelicula);
+            
+            }catch(DateAccessException e){
+                System.out.println(e);
+                }
+    }//GEN-LAST:event_jTextField3KeyReleased
 
     /**
      * @param args the command line arguments
@@ -361,9 +487,13 @@ public class RealizarAlquiler extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
@@ -376,4 +506,11 @@ public class RealizarAlquiler extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     // End of variables declaration//GEN-END:variables
+
+    public Date devolucion(){
+            Calendar hoy = Calendar.getInstance();
+            hoy.add(Calendar.DATE,7);
+            java.sql.Date f = new java.sql.Date(hoy.getTimeInMillis());
+            return f;
+        }
 }
